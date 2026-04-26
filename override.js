@@ -1,0 +1,509 @@
+(function () {
+  const routeKey = (() => {
+    const path = window.location.pathname.toLowerCase();
+    if (path.includes("/work")) return "work";
+    if (path.includes("/gallery")) return "gallery";
+    if (path.includes("/contact")) return "contact";
+    return "home";
+  })();
+
+  const homeHref = routeKey === "home" ? "./" : "../";
+  const galleryHref = routeKey === "home" ? "./gallery/" : "../gallery/";
+  const workHref = routeKey === "home" ? "./work/" : "../work/";
+  const contactHref = routeKey === "home" ? "./contact/" : "../contact/";
+
+  const normalize = (value) =>
+    String(value || "")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u201C\u201D]/g, '"')
+      .replace(/[^a-z0-9]+/gi, "")
+      .toLowerCase();
+
+  const plainNodes = () =>
+    Array.from(document.querySelectorAll("p, h1, h2, h3, h4, h5, h6"));
+
+  const replaceText = (matcher, html) => {
+    plainNodes().forEach((node) => {
+      const current = normalize(node.textContent);
+      if (!current) return;
+      const matched =
+        typeof matcher === "string"
+          ? current === normalize(matcher)
+          : matcher(current, node);
+      if (matched) node.innerHTML = html;
+    });
+  };
+
+  const replaceRollingText = (matcher, newText, href) => {
+    const rolling = Array.from(document.querySelectorAll("p[class*='rolling-text-inner']"));
+    rolling.forEach((node) => {
+      const current = normalize(node.textContent);
+      const matched =
+        typeof matcher === "string"
+          ? current === normalize(matcher)
+          : matcher(current, node);
+      if (!matched) return;
+
+      const spanTemplate = node.querySelector("span");
+      if (!spanTemplate) return;
+      const style = spanTemplate.getAttribute("style") || "";
+
+      node.innerHTML = "";
+      Array.from(newText).forEach((character) => {
+        const span = document.createElement("span");
+        if (style) span.setAttribute("style", style);
+        span.innerHTML = character === " " ? "&nbsp;" : character;
+        node.appendChild(span);
+      });
+
+      if (href) {
+        const link = node.closest("a");
+        if (link) {
+          link.setAttribute("href", href);
+          link.removeAttribute("target");
+          link.removeAttribute("rel");
+        }
+      }
+    });
+  };
+
+  const replaceRollingLinkByHref = (hrefPart, newText, newHref) => {
+    document.querySelectorAll(`a[href*="${hrefPart}"]`).forEach((link) => {
+      const node = link.querySelector("p[class*='rolling-text-inner']");
+      if (!node) return;
+      const spanTemplate = node.querySelector("span");
+      if (!spanTemplate) return;
+      const style = spanTemplate.getAttribute("style") || "";
+
+      node.innerHTML = "";
+      Array.from(newText).forEach((character) => {
+        const span = document.createElement("span");
+        if (style) span.setAttribute("style", style);
+        span.innerHTML = character === " " ? "&nbsp;" : character;
+        node.appendChild(span);
+      });
+
+      link.setAttribute("href", newHref);
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    });
+  };
+
+  const replaceHref = (oldHref, newHref) => {
+    document.querySelectorAll(`a[href="${oldHref}"]`).forEach((link) => {
+      link.setAttribute("href", newHref);
+      if (newHref.startsWith("./") || newHref.startsWith("../")) {
+        link.removeAttribute("target");
+        link.removeAttribute("rel");
+      }
+    });
+  };
+
+  const rewriteProjectDetailLinks = () => {
+    const slugs = ["sonder-goods", "halo-wear", "lucent-lab", "arc-bloom", "atelier-nara"];
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      if (slugs.some((slug) => href.includes(slug))) {
+        link.setAttribute("href", workHref);
+        link.removeAttribute("target");
+        link.removeAttribute("rel");
+      }
+    });
+  };
+
+  const hideBySelector = (selector) => {
+    document.querySelectorAll(selector).forEach((node) => {
+      const target = node.closest("div, section, a") || node;
+      target.classList.add("bn-hidden");
+    });
+  };
+
+  const hideSectionByHeading = (heading) => {
+    const target = normalize(heading);
+    plainNodes().forEach((node) => {
+      if (normalize(node.textContent) === target) {
+        const section = node.closest("section");
+        if (section) section.classList.add("bn-hidden");
+      }
+    });
+  };
+
+  const applyMeta = () => {
+    const meta = {
+      home: {
+        title: "Babar Naeem | AI Engineer & Data Scientist",
+        description:
+          "Babar Naeem builds AI systems, data products, analytics workflows, and machine learning experiences with production focus and calm visual clarity.",
+      },
+      work: {
+        title: "Babar Naeem | Selected AI and Data Work",
+        description:
+          "Selected AI engineering, data science, automation, and applied machine learning work by Babar Naeem.",
+      },
+      gallery: {
+        title: "Babar Naeem | Research and Visual Notes",
+        description:
+          "Research notes, visual references, and process snapshots from Babar Naeem's AI and data practice.",
+      },
+      contact: {
+        title: "Babar Naeem | Contact",
+        description:
+          "Start a conversation with Babar Naeem about AI systems, data science, analytics, and automation work.",
+      },
+    }[routeKey];
+
+    document.title = meta.title;
+    [
+      'meta[name="description"]',
+      'meta[property="og:title"]',
+      'meta[name="twitter:title"]',
+    ].forEach((selector) => {
+      const node = document.querySelector(selector);
+      if (node) node.setAttribute("content", selector.includes("description") ? meta.description : meta.title);
+    });
+    [
+      'meta[property="og:description"]',
+      'meta[name="twitter:description"]',
+    ].forEach((selector) => {
+      const node = document.querySelector(selector);
+      if (node) node.setAttribute("content", meta.description);
+    });
+  };
+
+  const applyCommon = () => {
+    replaceHref("./", homeHref);
+    replaceHref("./gallery", galleryHref);
+    replaceHref("./work", workHref);
+    replaceHref("./contact", contactHref);
+    replaceHref("./#top", homeHref + "#top");
+    rewriteProjectDetailLinks();
+
+    document.querySelectorAll('a[href*="MandroDesign"]').forEach((link) => {
+      link.setAttribute("href", contactHref);
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    });
+
+    replaceText("Palmer", "Babar");
+    replaceText((text) => text.includes("basedintokyo"), "Based in Pakistan");
+    replaceText((text) => text.includes("artdirectorframerdeveloper"), "AI Engineer + Data Scientist");
+    replaceText(
+      (text) =>
+        text.includes("ibuildexpressiveperformancedrivenwebsites") ||
+        text.includes("iblendcleandesignandnativedevelopmentinsideframer"),
+      "I build AI systems, data products, analytics workflows, and automation experiences that are clear, production-minded, and built to create measurable value."
+    );
+    replaceText((text) => text === "independent", "Applied");
+    replaceText((text) => text === "overview", "Systems");
+    replaceText((text) => text === "multidisciplinary", "Modeling");
+    replaceText((text) => text === "focused", "Delivery");
+
+    replaceText((text) => text.includes("helpcenter"), "Questions");
+    replaceText((text) => text === "clarifications", "Scope Notes");
+    replaceText(
+      (text) => text.includes("clarifyingdeliverablesbeforetheybegin"),
+      "Questions about scope, models, data, and delivery before we build anything important."
+    );
+    replaceText((text) => text === "whatservicesdoyouoffer", "What do you build?");
+    replaceText((text) => text === "whatisyourtypicalturnaroundtime", "How do you scope AI projects?");
+    replaceText((text) => text === "doyouonlyworkinframer", "Do you work with existing data stacks?");
+    replaceText((text) => text === "canyouhandlebothdesignandbuild", "Can you take ideas from prototype to production?");
+    replaceText((text) => text === "doyouofferbrandstrategytoo", "Do you help with evaluation and monitoring?");
+    replaceText((text) => text.includes("whatsyourprocesslike"), "What does collaboration look like?");
+
+    replaceText((text) => text.includes("finalsection"), "Closing Notes");
+    replaceText((text) => text === "studiowrap", "Built for Real Use");
+
+    replaceRollingText("instagram", "Home", homeHref);
+    replaceRollingText("dribbble", "Work", workHref);
+    replaceRollingText("framer", "Research", galleryHref);
+    replaceRollingText("twitter", "Contact", contactHref);
+    replaceRollingLinkByHref("instagram.com", "Home", homeHref);
+    replaceRollingLinkByHref("dribbble.com", "Work", workHref);
+    replaceRollingLinkByHref("framer.com", "Research", galleryHref);
+    replaceRollingLinkByHref("x.com/MandroDesign", "Contact", contactHref);
+
+    hideBySelector('a[href*="framer.link/"]');
+    hideBySelector('#__framer-badge-container');
+    hideSectionByHeading("Clients");
+  };
+
+  const applyHome = () => {
+    replaceText((text) => text === "artdirection", "AI Systems");
+    replaceText((text) => text === "branding", "Data Science");
+    replaceText((text) => text === "strategy", "LLM Design");
+    replaceText((text) => text === "webdesign", "Automation");
+    replaceText(
+      (text) => text.includes("patterndimensionsandmoments"),
+      "Models, Pipelines<br>and Products that<br>Think Fast and Drive<br>Real Impact."
+    );
+    replaceText((text) => text === "babar", "Babar");
+    replaceText((text) => text === "digitaldesigner", "AI Engineer");
+    replaceText((text) => text === "visualfreelancer", "Data Scientist");
+    replaceText((text) => text === "digitalnomad", "ML Builder");
+    replaceText((text) => text === "creativedeveloper", "Automation Architect");
+    replaceText(
+      (text) => text.includes("13years") || text.includes("relentlesscreativediscipline"),
+      "I build production AI systems, analytics pipelines, and decision workflows with a bias for clarity, speed, and real-world usefulness."
+    );
+
+    replaceText((text) => text === "creativedevelopment", "Applied AI");
+    replaceText((text) => text.includes("featuredprojects"), "Featured Projects");
+    replaceText((text) => text.includes("featuredworks"), "Selected Work");
+    replaceText(
+      (text) => text.includes("everyprojectisachancetoblenddesignanddevelopment"),
+      "From retrieval systems to forecasting pipelines, I turn complex model and data work into products people can actually use."
+    );
+    replaceText((text) => text === "sondergoods", "InsightFlow");
+    replaceText((text) => text === "halowear", "Signal Stack");
+    replaceText((text) => text === "lucentlab", "RAG Console");
+    replaceText((text) => text === "arcbloom", "Forecast Grid");
+    replaceText((text) => text === "ateliernara", "Agent Studio");
+    replaceText((text) => text === "creativedirection", "LLM Systems");
+    replaceText((text) => text === "identitydesign", "Time Series");
+    replaceText((text) => text === "portfoliosite", "Workflow Automation");
+
+    replaceText((text) => text === "services", "Capabilities");
+    replaceText((text) => text === "precise", "Practical");
+    replaceText((text) => text === "structured", "Reliable");
+    replaceText((text) => text === "focused", "Scalable");
+    replaceText((text) => text === "visuallanguage", "AI Strategy");
+    replaceText((text) => text === "brandidentity", "Data Products");
+    replaceText((text) => text === "motiondirection", "LLM Workflows");
+    replaceText((text) => text === "framersites", "Analytics Apps");
+    replaceText(
+      (text) => text.includes("weguideeveryvisualdecision"),
+      "I scope the right AI approach, connect the data, and shape the product around clear business outcomes."
+    );
+    replaceText(
+      (text) => text.includes("fromstrategytoexecutionweshapeconsistentbrandsystems"),
+      "From exploration to deployment, I build model-driven systems that are measurable, maintainable, and ready for use."
+    );
+    replaceText(
+      (text) => text.includes("weusemotionasadesigntool"),
+      "I use evaluation, prompting, and pipeline design to make LLM features useful instead of merely impressive."
+    );
+    replaceText(
+      (text) => text.includes("designmeetsexecutionwithrealtimescalablewebsites"),
+      "I ship dashboards, agents, and analytics tools with clean interfaces and dependable backend logic."
+    );
+
+    replaceText((text) => text === "visualthinker", "Systems Thinker");
+    replaceText(
+      (text) => text.includes("webridgecreativedirectionwithrealworldexecution"),
+      "I bridge experimentation and delivery, combining modeling, data work, and product thinking into systems that are useful, fast, and built to hold up in production."
+    );
+
+    replaceText((text) => text.includes("experience"), "Experience");
+    replaceText((text) => text.includes("pickplans"), "Build Track");
+    replaceText((text) => text === "clavmenstudio", "Independent Practice");
+    replaceText((text) => text === "2022present", "2023 - present");
+    replaceText((text) => text === "artdirectordesigner", "AI Engineer & Data Scientist");
+    replaceText((text) => text === "tokyo", "Pakistan");
+    replaceText((text) => text === "modulareight", "LLM Systems");
+    replaceText((text) => text === "seniordeveloper", "RAG + Agents");
+    replaceText((text) => text === "osaka", "Remote");
+    replaceText((text) => text === "hausofsignal", "Analytics Engineering");
+    replaceText((text) => text === "creativetechnologist", "Pipelines + Dashboards");
+    replaceText((text) => text === "berlin", "Global");
+    replaceText((text) => text === "studioorbit", "Automation Design");
+    replaceText((text) => text === "uiuxdesigner", "Workflow Architect");
+    replaceText((text) => text === "dallas", "Remote");
+    replaceText((text) => text === "novaformlabs", "Predictive Modeling");
+    replaceText((text) => text === "juniordesigner", "Forecasting + NLP");
+    replaceText((text) => text === "kyoto", "Applied");
+
+    replaceText((text) => text.includes("testimonialreviews"), "Working Principles");
+    replaceText((text) => text === "lisakuroda", "Applied AI");
+    replaceText((text) => text === "founderstudioanalog", "Useful systems, not empty demos");
+    replaceText((text) => text === "danielreyes", "Data Systems");
+    replaceText((text) => text === "directorframehaus", "Clear pipelines and strong evaluation");
+    replaceText((text) => text === "meitanaka", "LLM Design");
+    replaceText((text) => text === "uxdesignernuro", "Interfaces that explain the model");
+    replaceText((text) => text === "julianpierce", "Automation");
+    replaceText((text) => text === "directorvektorinc", "Less manual work, more signal");
+    replaceText((text) => text === "hanasamoto", "Decision Support");
+    replaceText((text) => text === "ceowillowstudio", "Reliable output for real teams");
+    replaceText(
+      (text) => text.includes("akihikoelevatedeverylayer"),
+      '"I design AI products to be useful first: measurable, understandable, and ready for real workflows."'
+    );
+    replaceText(
+      (text) => text.includes("akihikoapproacheseveryproject"),
+      '"Every system I build needs a strong backbone: clear data, thoughtful evaluation, and clean delivery."'
+    );
+    replaceText(
+      (text) => text.includes("hisabilitytomerge"),
+      '"Good AI work is not hype. It is accuracy, latency, usability, and trust working together."'
+    );
+    replaceText(
+      (text) => text.includes("workingwithakihikowasmorethan"),
+      '"The best products turn messy operational problems into calm, repeatable decisions."'
+    );
+    replaceText(
+      (text) => text.includes("akihikobringsararebalance"),
+      '"I like shipping fast, but I care even more about making the thing dependable once it is live."'
+    );
+
+    replaceText((text) => text === "awards", "Focus Areas");
+    replaceText((text) => text.includes("selectedhonors"), "Core Specialties");
+    replaceText((text) => text === "awwwards", "LLM");
+    replaceText((text) => text === "cssd", "Analytics");
+    replaceText((text) => text === "framer", "Automation");
+    replaceText((text) => text === "dribbble", "Data");
+    replaceText((text) => text === "fwa", "MLOps");
+    replaceText((text) => text === "cssda", "Decisioning");
+    replaceText((text) => text === "27x", "01x");
+    replaceText((text) => text === "14x", "02x");
+    replaceText((text) => text === "09x", "03x");
+    replaceText((text) => text === "08x", "04x");
+    replaceText(
+      (text) => text.includes("recognizedforboldinteraction"),
+      "LLM systems for search, retrieval, workflow orchestration, and human-in-the-loop productivity."
+    );
+    replaceText(
+      (text) => text.includes("awardedforoutstandingexecution"),
+      "Analytics engineering across reporting layers, metrics design, experiment readouts, and decision dashboards."
+    );
+    replaceText(
+      (text) => text.includes("celebratedforfrontendexcellence"),
+      "Automation that connects models, business logic, and operational steps into dependable delivery loops."
+    );
+    replaceText(
+      (text) => text.includes("highlightedforstrongtypographicsystems"),
+      "Data foundations for forecasting, classification, segmentation, and practical machine learning deployment."
+    );
+
+    replaceText((text) => text.includes("projectpricing"), "Engagement Models");
+    replaceText((text) => text === "customquotes", "Flexible Scope");
+    replaceText((text) => text === "designpackages", "Service Packages");
+    replaceText((text) => text === "pricingtiers", "Delivery Models");
+    replaceText((text) => text === "99" || text === "$99", "Custom");
+    replaceText((text) => text === "299" || text === "$299", "Custom");
+    replaceText((text) => text === "899" || text === "$899", "Custom");
+    replaceText((text) => text === "month", "/Project");
+    replaceText((text) => text === "starterplan", "Starter Sprint");
+    replaceText(
+      (text) => text.includes("perfectforsmalllaunchesandpersonalsites"),
+      "For focused AI or analytics work that needs clear scoping and a fast first build."
+    );
+    replaceText((text) => text === "onepageframersite", "Problem framing workshop");
+    replaceText((text) => text === "customlayoutvisuals", "Solution architecture");
+    replaceText((text) => text === "mobilefirstresponsivebuild", "Data and tooling review");
+    replaceText((text) => text.includes("fastdeliverywithindays"), "Rapid prototype plan");
+    replaceText((text) => text === "designsystemsetup", "Success metric definition");
+    replaceText((text) => text === "seoreadystructure", "Risk and dependency mapping");
+    replaceText((text) => text === "basiccmsintegration", "Execution roadmap");
+    replaceText((text) => text === "contactformsetup", "Clear handoff notes");
+    replaceText((text) => text === "growthplan", "Build Phase");
+    replaceText(
+      (text) => text.includes("designedforgrowingbrandsthatneedflexibility"),
+      "For teams ready to turn a validated use case into a working product or internal tool."
+    );
+    replaceText((text) => text === "upto5pages", "Pipeline implementation");
+    replaceText((text) => text === "framercmspoweredsections", "Model or prompt design");
+    replaceText((text) => text === "componentbasedstructure", "Evaluation loops");
+    replaceText((text) => text === "motiondesigntransitions", "Workflow automation");
+    replaceText((text) => text === "cleanuxfocusedlayout", "Simple user experience");
+    replaceText((text) => text === "deviceoptimizedresponsiveness", "Monitoring basics");
+    replaceText((text) => text === "styleguidesystem", "Documentation and guides");
+    replaceText((text) => text === "emailcaptureintegrations", "System integrations");
+    replaceText((text) => text === "fullscopeplan", "Full System");
+    replaceText(
+      (text) => text.includes("bestforstudiosorteamsneedingstructure"),
+      "For end-to-end AI, data, and analytics programs that need design, engineering, and operational rigor."
+    );
+    replaceText((text) => text === "10pageswithcms", "Production architecture");
+    replaceText((text) => text === "advancedlayoutstrategy", "Full data workflow");
+    replaceText((text) => text === "fullbrandsystemsupport", "Experimentation and eval");
+    replaceText((text) => text === "animationdirection", "Governance and QA");
+    replaceText((text) => text === "custombuiltcomponents", "Custom product surfaces");
+    replaceText((text) => text === "framercmstraining", "Team enablement");
+    replaceText((text) => text === "launchsupportqa", "Launch and tuning");
+    replaceText((text) => text === "performanceoptimization", "Performance optimization");
+
+    replaceText((text) => text.includes("visualjournal"), "Research Notes");
+    replaceText((text) => text === "creativenotes", "Field Notes");
+    replaceText((text) => text.includes("featuredarticle"), "Notebook");
+    replaceText((text) => text === "gregorylalle", "Babar Naeem");
+    replaceText((text) => text === "may212024", "January 12, 2026");
+    replaceText((text) => text === "clivewillow", "Babar Naeem");
+    replaceText((text) => text === "february52024", "February 03, 2026");
+    replaceText((text) => text === "ravinclaw", "Babar Naeem");
+    replaceText((text) => text === "june22024", "March 09, 2026");
+    replaceText((text) => text === "claynicolas", "Babar Naeem");
+    replaceText((text) => text === "june102025", "April 14, 2026");
+    replaceText((text) => text === "design", "LLM");
+    replaceText((text) => text === "visualidentity", "Analytics");
+    replaceText((text) => text === "portfolio", "Automation");
+    replaceText(
+      (text) => text.includes("gooddesignisnotjustaboutstructure"),
+      "Useful AI is not just about models. It is also about clear data, evaluation, latency, and trust in the hands of a real team."
+    );
+    replaceText(
+      (text) => text.includes("typographytodayisnolongerstatic"),
+      "A model is only valuable when it can explain itself in the workflow, not just in a notebook."
+    );
+    replaceText(
+      (text) => text.includes("minimaldesignisntemptiness"),
+      "The cleanest systems are usually the ones that remove guesswork, reduce manual steps, and make decisions easier."
+    );
+    replaceText(
+      (text) => text.includes("portfoliostodaymustbemorethanarchives"),
+      "Modern AI products need to feel reliable, observable, and calm, even when the system underneath is complex."
+    );
+  };
+
+  const applyWork = () => {
+    replaceText((text) => text === "works", "Projects");
+    replaceText((text) => text === "allworks", "Selected Projects");
+    replaceText((text) => text === "sondergoods", "InsightFlow");
+    replaceText((text) => text === "branding", "LLM Operations");
+    replaceText((text) => text === "halowear", "Signal Stack");
+    replaceText((text) => text === "webdesign", "Analytics UX");
+    replaceText((text) => text === "lucentlab", "RAG Console");
+    replaceText((text) => text === "creativedirection", "Applied AI");
+    replaceText((text) => text === "arcbloom", "Forecast Grid");
+    replaceText((text) => text === "identitydesign", "Predictive Modeling");
+    replaceText((text) => text === "ateliernara", "Agent Studio");
+    replaceText((text) => text === "portfoliosite", "Workflow Automation");
+  };
+
+  const applyGallery = () => {
+    replaceText((text) => text === "gallery", "Research");
+  };
+
+  const applyContact = () => {
+    replaceText((text) => text === "callme", "Let's Work");
+    replaceText((text) => text === "247support", "Project Inquiries");
+    replaceText((text) => text === "remote", "Remote");
+    replaceText((text) => text.includes("officetokyojapan"), "Based in Pakistan");
+    replaceText((text) => text.includes("followmeoninstagram"), "Available for remote AI and data collaborations.");
+    replaceText((text) => text.includes("sayhiakihikocom"), "Use the work page as the project brief entry point.");
+    replaceText((text) => text === "contactnow", "View Projects");
+    document.querySelectorAll('a[href*="instagram.com"]').forEach((link) => {
+      link.setAttribute("href", workHref);
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    });
+  };
+
+  const run = () => {
+    applyMeta();
+    applyCommon();
+    if (routeKey === "home") applyHome();
+    if (routeKey === "work") applyWork();
+    if (routeKey === "gallery") applyGallery();
+    if (routeKey === "contact") applyContact();
+  };
+
+  run();
+  window.addEventListener("load", run);
+  let attempts = 0;
+  const timer = window.setInterval(() => {
+    run();
+    attempts += 1;
+    if (attempts > 10) window.clearInterval(timer);
+  }, 500);
+})();
