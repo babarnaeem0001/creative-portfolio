@@ -172,13 +172,6 @@
   };
 
   const applyCommon = () => {
-    // Hide Japanese text immediately
-    document.querySelectorAll("h6, p").forEach((el) => {
-      if (el.textContent.includes("ビジュアル") || el.textContent.includes("CURATED INTERFACES")) {
-        el.style.display = "none";
-      }
-    });
-
     replaceHref("./", homeHref);
     replaceHref("./gallery", galleryHref);
     replaceHref("./work", workHref);
@@ -505,32 +498,23 @@
   };
 
   const hideElements = () => {
-    // Hide Japanese text and design markers
-    document.querySelectorAll("h6, p, div, span").forEach((el) => {
-      const text = el.textContent || "";
-      if (text.includes("ビジュアル") || 
-          text.includes("CURATED INTERFACES") || 
-          (text.includes("WDX") && text.includes("0"))) {
+    try {
+      // Hide Japanese text
+      document.querySelectorAll("h6").forEach((el) => {
+        const text = el.textContent || "";
+        if (text.includes("ビジュアル") || (text.includes("CURATED INTERFACES"))) {
+          el.style.display = "none";
+        }
+      });
+      
+      // Hide edit/pencil icon
+      const editIcons = document.querySelectorAll("[class*='icxlw2'], [class*='pencil'], [data-framer-name*='Pencil']");
+      editIcons.forEach((el) => {
         el.style.display = "none";
-      }
-    });
-    
-    // Hide pencil/edit icons and red circles
-    document.querySelectorAll('[class*="pencil"], [class*="edit-icon"], [class*="circle"], svg[class*="icon"]').forEach((el) => {
-      const style = window.getComputedStyle(el);
-      if (style.fill === "rgb(255, 0, 0)" || el.getAttribute("stroke") === "red") {
-        el.style.display = "none";
-      }
-    });
-
-    // Fix Focus Areas overflow
-    document.querySelectorAll('h2, h3').forEach((el) => {
-      if (el.textContent.includes("Focus Areas") || el.textContent.includes("FOCUS AREAS")) {
-        el.style.overflow = "visible";
-        el.style.whiteSpace = "normal";
-        el.style.wordWrap = "break-word";
-      }
-    });
+      });
+    } catch (e) {
+      console.error("Error hiding elements:", e);
+    }
   };
 
   const run = () => {

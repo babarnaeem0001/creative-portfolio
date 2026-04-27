@@ -3,30 +3,11 @@
   display: none !important;
 }
 
-/* Hide Japanese text and design elements */
-h6:contains("ビジュアル"),
-h6:contains("CURATED INTERFACES") {
-  display: none !important;
-}
-
-/* Hide WDX markers and circles */
+/* Hide WDX markers and edit pencil */
 [class*="WDX"],
-[class*="circle-red"],
 [class*="pencil"],
 [data-framer-name*="Pencil"],
-[data-framer-name*="WDX"] {
-  display: none !important;
-}
-
-/* Fix Focus Areas overflow */
-h2, h3 {
-  overflow: visible !important;
-  white-space: normal !important;
-  word-wrap: break-word !important;
-}
-
-/* Hide red stroke elements */
-svg [stroke="red"],
-svg [stroke="rgb(255, 0, 0)"] {
+[data-framer-name*="WDX"],
+[data-framer-name*="Loader"] {
   display: none !important;
 }
