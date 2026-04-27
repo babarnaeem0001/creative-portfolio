@@ -134,22 +134,22 @@
       home: {
         title: "Babar Naeem | AI Engineer & Data Scientist",
         description:
-          "Babar Naeem builds AI systems, data products, analytics workflows, and machine learning experiences with production focus and calm visual clarity.",
+          "I'm Babar Naeem — an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build intelligent systems, automation workflows, and full-stack applications from idea to execution.",
       },
       work: {
-        title: "Babar Naeem | Selected AI and Data Work",
+        title: "Babar Naeem | Selected Projects",
         description:
-          "Selected AI engineering, data science, automation, and applied machine learning work by Babar Naeem.",
+          "Selected AI, automation, and full-stack development work by Babar Naeem — from mobile apps to RAG systems.",
       },
       gallery: {
-        title: "Babar Naeem | Research and Visual Notes",
+        title: "Babar Naeem | Research Notes",
         description:
-          "Research notes, visual references, and process snapshots from Babar Naeem's AI and data practice.",
+          "Research notes, process snapshots, and technical insights from Babar Naeem's AI and development practice.",
       },
       contact: {
         title: "Babar Naeem | Contact",
         description:
-          "Start a conversation with Babar Naeem about AI systems, data science, analytics, and automation work.",
+          "Start a conversation with Babar Naeem about AI systems, automation, and full-stack development projects.",
       },
     }[routeKey];
 
@@ -241,11 +241,11 @@
     replaceText((text) => text === "babar", "Babar");
     replaceText((text) => text === "digitaldesigner", "AI Engineer");
     replaceText((text) => text === "visualfreelancer", "Data Scientist");
-    replaceText((text) => text === "digitalnomad", "ML Builder");
+    replaceText((text) => text === "digitalnomad", "Full Stack Developer");
     replaceText((text) => text === "creativedeveloper", "Automation Architect");
     replaceText(
       (text) => text.includes("13years") || text.includes("relentlesscreativediscipline"),
-      "I build production AI systems, analytics pipelines, and decision workflows with a bias for clarity, speed, and real-world usefulness."
+      "I'm Babar Naeem — an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build intelligent systems, automation workflows, and full-stack applications from idea to execution. I work with LLMs, RAG pipelines, intent classifiers, and real-world apps that think and scale."
     );
 
     replaceText((text) => text === "creativedevelopment", "Applied AI");
@@ -255,14 +255,14 @@
       (text) => text.includes("everyprojectisachancetoblenddesignanddevelopment"),
       "From retrieval systems to forecasting pipelines, I turn complex model and data work into products people can actually use."
     );
-    replaceText((text) => text === "sondergoods", "InsightFlow");
-    replaceText((text) => text === "halowear", "Signal Stack");
-    replaceText((text) => text === "lucentlab", "RAG Console");
-    replaceText((text) => text === "arcbloom", "Forecast Grid");
-    replaceText((text) => text === "ateliernara", "Agent Studio");
-    replaceText((text) => text === "creativedirection", "LLM Systems");
-    replaceText((text) => text === "identitydesign", "Time Series");
-    replaceText((text) => text === "portfoliosite", "Workflow Automation");
+    replaceText((text) => text === "sondergoods", "Dastarkhaan");
+    replaceText((text) => text === "halowear", "Taj Mahal App");
+    replaceText((text) => text === "lucentlab", "StudyFocus");
+    replaceText((text) => text === "arcbloom", "Intent Classifier");
+    replaceText((text) => text === "ateliernara", "RAG System");
+    replaceText((text) => text === "creativedirection", "Restaurant App");
+    replaceText((text) => text === "identitydesign", "Productivity App");
+    replaceText((text) => text === "portfoliosite", "AI Automation");
 
     replaceText((text) => text === "services", "Capabilities");
     replaceText((text) => text === "precise", "Practical");
@@ -274,19 +274,19 @@
     replaceText((text) => text === "framersites", "Analytics Apps");
     replaceText(
       (text) => text.includes("weguideeveryvisualdecision"),
-      "I scope the right AI approach, connect the data, and shape the product around clear business outcomes."
+      "I build AI and automation systems that solve real problems, not demos. Every project ships with clear goals and measurable outcomes."
     );
     replaceText(
       (text) => text.includes("fromstrategytoexecutionweshapeconsistentbrandsystems"),
-      "From exploration to deployment, I build model-driven systems that are measurable, maintainable, and ready for use."
+      "Clean pipelines, strong evaluation, and production-ready code. Systems you can trust in the real world."
     );
     replaceText(
       (text) => text.includes("weusemotionasadesigntool"),
-      "I use evaluation, prompting, and pipeline design to make LLM features useful instead of merely impressive."
+      "From prototype to full deployment. I design architectures that grow with your needs."
     );
     replaceText(
       (text) => text.includes("designmeetsexecutionwithrealtimescalablewebsites"),
-      "I ship dashboards, agents, and analytics tools with clean interfaces and dependable backend logic."
+      "LLMs, RAG systems, intent classifiers, and automation workflows tailored to your use case."
     );
 
     replaceText((text) => text === "visualthinker", "Systems Thinker");
@@ -299,31 +299,31 @@
     replaceText((text) => text.includes("pickplans"), "Build Track");
     replaceText((text) => text === "clavmenstudio", "Independent Practice");
     replaceText((text) => text === "2022present", "2023 - present");
-    replaceText((text) => text === "artdirectordesigner", "AI Engineer & Data Scientist");
-    replaceText((text) => text === "tokyo", "Pakistan");
+    replaceText((text) => text === "artdirectordesigner", "AI Engineer & Full Stack Developer");
+    replaceText((text) => text === "tokyo", "Islamabad, Pakistan");
     replaceText((text) => text === "modulareight", "LLM Systems");
-    replaceText((text) => text === "seniordeveloper", "RAG + Agents");
+    replaceText((text) => text === "seniordeveloper", "RAG Pipelines + Agent Workflows");
     replaceText((text) => text === "osaka", "Remote");
-    replaceText((text) => text === "hausofsignal", "Analytics Engineering");
-    replaceText((text) => text === "creativetechnologist", "Pipelines + Dashboards");
-    replaceText((text) => text === "berlin", "Global");
+    replaceText((text) => text === "hausofsignal", "App Development");
+    replaceText((text) => text === "creativetechnologist", "Full Stack Mobile & Web Apps");
+    replaceText((text) => text === "berlin", "Pakistan");
     replaceText((text) => text === "studioorbit", "Automation Design");
     replaceText((text) => text === "uiuxdesigner", "Workflow Architect");
     replaceText((text) => text === "dallas", "Remote");
-    replaceText((text) => text === "novaformlabs", "Predictive Modeling");
-    replaceText((text) => text === "juniordesigner", "Forecasting + NLP");
+    replaceText((text) => text === "novaformlabs", "ML / AI Projects");
+    replaceText((text) => text === "juniordesigner", "NLP + Intent Classification + Predictive Systems");
     replaceText((text) => text === "kyoto", "Applied");
 
     replaceText((text) => text.includes("testimonialreviews"), "Working Principles");
     replaceText((text) => text === "lisakuroda", "Applied AI");
     replaceText((text) => text === "founderstudioanalog", "Useful systems, not empty demos");
-    replaceText((text) => text === "danielreyes", "Data Systems");
-    replaceText((text) => text === "directorframehaus", "Clear pipelines and strong evaluation");
-    replaceText((text) => text === "meitanaka", "LLM Design");
-    replaceText((text) => text === "uxdesignernuro", "Interfaces that explain the model");
-    replaceText((text) => text === "julianpierce", "Automation");
-    replaceText((text) => text === "directorvektorinc", "Less manual work, more signal");
-    replaceText((text) => text === "hanasamoto", "Decision Support");
+    replaceText((text) => text === "danielreyes", "Automation");
+    replaceText((text) => text === "directorframehaus", "Clean workflows that actually save time");
+    replaceText((text) => text === "meitanaka", "App Development");
+    replaceText((text) => text === "uxdesignernuro", "Shipped a polished app from scratch, fast");
+    replaceText((text) => text === "julianpierce", "LLM Systems");
+    replaceText((text) => text === "directorvektorinc", "Built a RAG pipeline that works in production");
+    replaceText((text) => text === "hanasamoto", "Data Projects");
     replaceText((text) => text === "ceowillowstudio", "Reliable output for real teams");
     replaceText(
       (text) => text.includes("akihikoelevatedeverylayer"),
@@ -349,9 +349,9 @@
     replaceText((text) => text === "awards", "Focus Areas");
     replaceText((text) => text.includes("selectedhonors"), "Core Specialties");
     replaceText((text) => text === "awwwards", "LLM");
-    replaceText((text) => text === "cssd", "Analytics");
+    replaceText((text) => text === "cssd", "Full Stack");
     replaceText((text) => text === "framer", "Automation");
-    replaceText((text) => text === "dribbble", "Data");
+    replaceText((text) => text === "dribbble", "Databases");
     replaceText((text) => text === "fwa", "MLOps");
     replaceText((text) => text === "cssda", "Decisioning");
     replaceText((text) => text === "27x", "01x");
@@ -360,19 +360,19 @@
     replaceText((text) => text === "08x", "04x");
     replaceText(
       (text) => text.includes("recognizedforboldinteraction"),
-      "LLM systems for search, retrieval, workflow orchestration, and human-in-the-loop productivity."
+      "Building RAG systems, intent classifiers, and AI-powered pipelines using LangChain and HuggingFace."
     );
     replaceText(
       (text) => text.includes("awardedforoutstandingexecution"),
-      "Analytics engineering across reporting layers, metrics design, experiment readouts, and decision dashboards."
+      "React, Next.js, Node.js, FastAPI — end-to-end apps with clean architecture."
     );
     replaceText(
       (text) => text.includes("celebratedforfrontendexcellence"),
-      "Automation that connects models, business logic, and operational steps into dependable delivery loops."
+      "Workflow systems that reduce manual work and increase signal."
     );
     replaceText(
       (text) => text.includes("highlightedforstrongtypographicsystems"),
-      "Data foundations for forecasting, classification, segmentation, and practical machine learning deployment."
+      "PostgreSQL, MongoDB, MySQL, Redis, Pinecone — strong data foundations."
     );
 
     replaceText((text) => text.includes("projectpricing"), "Engagement Models");
@@ -386,7 +386,7 @@
     replaceText((text) => text === "starterplan", "Starter Sprint");
     replaceText(
       (text) => text.includes("perfectforsmalllaunchesandpersonalsites"),
-      "For focused AI or analytics work that needs clear scoping and a fast first build."
+      "Focused AI, automation, or app work — scoped, fast, and actionable."
     );
     replaceText((text) => text === "onepageframersite", "Problem framing workshop");
     replaceText((text) => text === "customlayoutvisuals", "Solution architecture");
@@ -412,7 +412,7 @@
     replaceText((text) => text === "fullscopeplan", "Full System");
     replaceText(
       (text) => text.includes("bestforstudiosorteamsneedingstructure"),
-      "For end-to-end AI, data, and analytics programs that need design, engineering, and operational rigor."
+      "End-to-end development — from architecture to production deployment, with full handoff."
     );
     replaceText((text) => text === "10pageswithcms", "Production architecture");
     replaceText((text) => text === "advancedlayoutstrategy", "Full data workflow");
@@ -427,47 +427,47 @@
     replaceText((text) => text === "creativenotes", "Field Notes");
     replaceText((text) => text.includes("featuredarticle"), "Notebook");
     replaceText((text) => text === "gregorylalle", "Babar Naeem");
-    replaceText((text) => text === "may212024", "January 12, 2026");
+    replaceText((text) => text === "may212024", "April 2026");
     replaceText((text) => text === "clivewillow", "Babar Naeem");
-    replaceText((text) => text === "february52024", "February 03, 2026");
+    replaceText((text) => text === "february52024", "March 2026");
     replaceText((text) => text === "ravinclaw", "Babar Naeem");
-    replaceText((text) => text === "june22024", "March 09, 2026");
+    replaceText((text) => text === "june22024", "February 2026");
     replaceText((text) => text === "claynicolas", "Babar Naeem");
-    replaceText((text) => text === "june102025", "April 14, 2026");
+    replaceText((text) => text === "june102025", "January 2026");
     replaceText((text) => text === "design", "LLM");
-    replaceText((text) => text === "visualidentity", "Analytics");
+    replaceText((text) => text === "visualidentity", "Full Stack");
     replaceText((text) => text === "portfolio", "Automation");
     replaceText(
       (text) => text.includes("gooddesignisnotjustaboutstructure"),
-      "Useful AI is not just about models. It is also about clear data, evaluation, latency, and trust in the hands of a real team."
+      "How I build RAG systems and intent classifiers that ship to production."
     );
     replaceText(
       (text) => text.includes("typographytodayisnolongerstatic"),
-      "A model is only valuable when it can explain itself in the workflow, not just in a notebook."
+      "From Dastarkhaan to StudyFocus — what I learned shipping mobile apps."
     );
     replaceText(
       (text) => text.includes("minimaldesignisntemptiness"),
-      "The cleanest systems are usually the ones that remove guesswork, reduce manual steps, and make decisions easier."
+      "Designing workflows that actually reduce manual effort."
     );
     replaceText(
       (text) => text.includes("portfoliostodaymustbemorethanarchives"),
-      "Modern AI products need to feel reliable, observable, and calm, even when the system underneath is complex."
+      "The tools and frameworks I use across full stack, AI, and databases."
     );
   };
 
   const applyWork = () => {
     replaceText((text) => text === "works", "Projects");
     replaceText((text) => text === "allworks", "Selected Projects");
-    replaceText((text) => text === "sondergoods", "InsightFlow");
-    replaceText((text) => text === "branding", "LLM Operations");
-    replaceText((text) => text === "halowear", "Signal Stack");
-    replaceText((text) => text === "webdesign", "Analytics UX");
-    replaceText((text) => text === "lucentlab", "RAG Console");
-    replaceText((text) => text === "creativedirection", "Applied AI");
-    replaceText((text) => text === "arcbloom", "Forecast Grid");
-    replaceText((text) => text === "identitydesign", "Predictive Modeling");
-    replaceText((text) => text === "ateliernara", "Agent Studio");
-    replaceText((text) => text === "portfoliosite", "Workflow Automation");
+    replaceText((text) => text === "sondergoods", "Dastarkhaan");
+    replaceText((text) => text === "branding", "Restaurant App");
+    replaceText((text) => text === "halowear", "Taj Mahal App");
+    replaceText((text) => text === "webdesign", "Restaurant App");
+    replaceText((text) => text === "lucentlab", "StudyFocus");
+    replaceText((text) => text === "creativedirection", "Productivity App");
+    replaceText((text) => text === "arcbloom", "Intent Classifier");
+    replaceText((text) => text === "identitydesign", "NLP / AI");
+    replaceText((text) => text === "ateliernara", "RAG System");
+    replaceText((text) => text === "portfoliosite", "AI Automation");
   };
 
   const applyGallery = () => {
@@ -478,8 +478,8 @@
     replaceText((text) => text === "callme", "Let's Work");
     replaceText((text) => text === "247support", "Project Inquiries");
     replaceText((text) => text === "remote", "Remote");
-    replaceText((text) => text.includes("officetokyojapan"), "Based in Pakistan");
-    replaceText((text) => text.includes("followmeoninstagram"), "Available for remote AI and data collaborations.");
+    replaceText((text) => text.includes("officetokyojapan"), "Based in Islamabad, Pakistan");
+    replaceText((text) => text.includes("followmeoninstagram"), "Available for remote AI, automation, and full stack collaborations.");
     replaceText((text) => text.includes("sayhiakihikocom"), "Use the work page as the project brief entry point.");
     replaceText((text) => text === "contactnow", "View Projects");
     document.querySelectorAll('a[href*="instagram.com"]').forEach((link) => {
