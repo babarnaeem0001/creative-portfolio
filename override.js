@@ -508,9 +508,12 @@
       });
       
       // Hide edit/pencil icon
-      const editIcons = document.querySelectorAll("[class*='icxlw2'], [class*='pencil'], [data-framer-name*='Pencil']");
+      const editIcons = document.querySelectorAll(
+        "[class*='icxlw2'], [class*='pencil'], [class*='edit'], [data-framer-name*='Pencil'], svg[class*='edit'], svg[class*='pencil']"
+      );
       editIcons.forEach((el) => {
         el.style.display = "none";
+        el.style.visibility = "hidden";
       });
     } catch (e) {
       console.error("Error hiding elements:", e);

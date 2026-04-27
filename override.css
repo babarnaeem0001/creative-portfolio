@@ -6,8 +6,13 @@
 /* Hide WDX markers and edit pencil */
 [class*="WDX"],
 [class*="pencil"],
+[class*="edit"],
+[class*="icxlw2"],
 [data-framer-name*="Pencil"],
 [data-framer-name*="WDX"],
-[data-framer-name*="Loader"] {
+[data-framer-name*="Loader"],
+svg[class*="edit"],
+svg[class*="pencil"] {
   display: none !important;
+  visibility: hidden !important;
 }
