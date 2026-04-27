@@ -186,7 +186,7 @@
     });
 
     replaceText((text) => text.includes("curatedinterfaces"), "");
-    replaceText("Palmer", "Babar");
+    replaceText("Palmer", "Portfolio");
     replaceText((text) => text.includes("basedintokyo"), "Based in Pakistan");
     replaceText((text) => text.includes("artdirectorframerdeveloper"), "AI Engineer + Data Scientist");
     replaceText(
@@ -237,7 +237,7 @@
     replaceText((text) => text === "webdesign", "Automation");
     replaceText(
       (text) => text.includes("patterndimensionsandmoments"),
-      "Models, Pipelines<br>and Products that<br>Think Fast and Drive<br>Real Impact."
+      "Code, Intelligence,<br>and Automation"
     );
     replaceText((text) => text === "babar", "Babar");
     replaceText((text) => text === "digitaldesigner", "AI Engineer");
