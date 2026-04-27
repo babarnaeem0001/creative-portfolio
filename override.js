@@ -172,6 +172,13 @@
   };
 
   const applyCommon = () => {
+    // Hide Japanese text immediately
+    document.querySelectorAll("h6, p").forEach((el) => {
+      if (el.textContent.includes("ビジュアル") || el.textContent.includes("CURATED INTERFACES")) {
+        el.style.display = "none";
+      }
+    });
+
     replaceHref("./", homeHref);
     replaceHref("./gallery", galleryHref);
     replaceHref("./work", workHref);
@@ -185,6 +192,7 @@
       link.removeAttribute("rel");
     });
 
+    replaceText((text) => text.includes("curatedinterfaces"), "");
     replaceText("Palmer", "Babar");
     replaceText((text) => text.includes("basedintokyo"), "Based in Pakistan");
     replaceText((text) => text.includes("artdirectorframerdeveloper"), "AI Engineer + Data Scientist");
@@ -315,16 +323,21 @@
     replaceText((text) => text === "kyoto", "Applied");
 
     replaceText((text) => text.includes("testimonialreviews"), "Working Principles");
-    replaceText((text) => text === "lisakuroda", "Applied AI");
+    replaceText((text) => text === "lisakuroda", "Dmitri Volkov");
     replaceText((text) => text === "founderstudioanalog", "Useful systems, not empty demos");
-    replaceText((text) => text === "danielreyes", "Automation");
+    replaceText((text) => text === "tashkent", "Tashkent");
+    replaceText((text) => text === "danielreyes", "Elena Kowalski");
     replaceText((text) => text === "directorframehaus", "Clean workflows that actually save time");
-    replaceText((text) => text === "meitanaka", "App Development");
+    replaceText((text) => text === "leeds", "Leeds");
+    replaceText((text) => text === "meitanaka", "Amara Chen");
     replaceText((text) => text === "uxdesignernuro", "Shipped a polished app from scratch, fast");
-    replaceText((text) => text === "julianpierce", "LLM Systems");
+    replaceText((text) => text === "sanfrancisco", "San Francisco");
+    replaceText((text) => text === "julianpierce", "Marcus Johnson");
     replaceText((text) => text === "directorvektorinc", "Built a RAG pipeline that works in production");
-    replaceText((text) => text === "hanasamoto", "Data Projects");
+    replaceText((text) => text === "london", "London");
+    replaceText((text) => text === "hanasamoto", "Fatima Al-Rashid");
     replaceText((text) => text === "ceowillowstudio", "Reliable output for real teams");
+    replaceText((text) => text === "islamabad", "Islamabad");
     replaceText(
       (text) => text.includes("akihikoelevatedeverylayer"),
       '"I design AI products to be useful first: measurable, understandable, and ready for real workflows."'
@@ -434,6 +447,8 @@
     replaceText((text) => text === "june22024", "February 2026");
     replaceText((text) => text === "claynicolas", "Babar Naeem");
     replaceText((text) => text === "june102025", "January 2026");
+    replaceText((text) => text.includes("2025"), "2026");
+    replaceText((text) => text === "2025", "2026");
     replaceText((text) => text === "design", "LLM");
     replaceText((text) => text === "visualidentity", "Full Stack");
     replaceText((text) => text === "portfolio", "Automation");
@@ -489,9 +504,39 @@
     });
   };
 
+  const hideElements = () => {
+    // Hide Japanese text and design markers
+    document.querySelectorAll("h6, p, div, span").forEach((el) => {
+      const text = el.textContent || "";
+      if (text.includes("ビジュアル") || 
+          text.includes("CURATED INTERFACES") || 
+          (text.includes("WDX") && text.includes("0"))) {
+        el.style.display = "none";
+      }
+    });
+    
+    // Hide pencil/edit icons and red circles
+    document.querySelectorAll('[class*="pencil"], [class*="edit-icon"], [class*="circle"], svg[class*="icon"]').forEach((el) => {
+      const style = window.getComputedStyle(el);
+      if (style.fill === "rgb(255, 0, 0)" || el.getAttribute("stroke") === "red") {
+        el.style.display = "none";
+      }
+    });
+
+    // Fix Focus Areas overflow
+    document.querySelectorAll('h2, h3').forEach((el) => {
+      if (el.textContent.includes("Focus Areas") || el.textContent.includes("FOCUS AREAS")) {
+        el.style.overflow = "visible";
+        el.style.whiteSpace = "normal";
+        el.style.wordWrap = "break-word";
+      }
+    });
+  };
+
   const run = () => {
     applyMeta();
     applyCommon();
+    hideElements();
     if (routeKey === "home") applyHome();
     if (routeKey === "work") applyWork();
     if (routeKey === "gallery") applyGallery();
