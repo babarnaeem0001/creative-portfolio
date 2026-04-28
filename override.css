@@ -13,6 +13,11 @@
   display: none !important;
 }
 
+/* Hide social button */
+.framer-Joc5E {
+  display: none !important;
+}
+
 /* Hide WDX markers and edit pencil */
 [class*="WDX"],
 [class*="pencil"],
