@@ -3,6 +3,16 @@
   display: none !important;
 }
 
+/* Hide specific content element */
+.framer-1q7pjur {
+  display: none !important;
+}
+
+/* Hide Framer editor bar button */
+#__framer-editorbar-button {
+  display: none !important;
+}
+
 /* Hide WDX markers and edit pencil */
 [class*="WDX"],
 [class*="pencil"],
