@@ -3,6 +3,10 @@
   display: none !important;
 }
 
+html:not(.bn-ready) body {
+  visibility: hidden;
+}
+
 /* Hide specific content element */
 .framer-1q7pjur {
   display: none !important;

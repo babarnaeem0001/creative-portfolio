@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Gallery - Portfolio</title>
+    <meta name="description" content="Gallery of AI and data science visualizations and projects.">
+    <link rel="icon" href="https://framerusercontent.com/images/p4xJl6TIH0Vp2tyPPgyAyrl2dJM.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #888;
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 120px 0 100px;
+            min-height: 100vh;
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 4rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            aspect-ratio: 16/9;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .gallery-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+        
+        .gallery-item.tall {
+            grid-row: span 2;
+        }
+        
+        .gallery-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .gallery-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .gallery-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        
+        .gallery-description {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        /* Different background gradients for variety */
+        .gallery-item:nth-child(1) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gallery-item:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .gallery-item:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .gallery-item:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .gallery-item:nth-child(5) {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .gallery-item:nth-child(6) {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        
+        .gallery-item:nth-child(7) {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .gallery-item:nth-child(8) {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            background: #111;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #222;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item.large,
+            .gallery-item.wide,
+            .gallery-item.tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="static-index.html" class="logo">Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="static-index.html">Home</a></li>
+                <li><a href="static-work.html">Work</a></li>
+                <li><a href="static-gallery.html">Gallery</a></li>
+                <li><a href="static-contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="gallery">
+        <div class="container">
+            <h1 class="page-title">Gallery</h1>
+            <p class="page-subtitle">Visualizations & Data Art</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">🧠</div>
+                        <h3 class="gallery-title">Neural Network Architecture</h3>
+                        <p class="gallery-description">Deep learning model visualization with interconnected layers and weight distributions</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">📊</div>
+                        <h3 class="gallery-title">Data Flow Analysis</h3>
+                        <p class="gallery-description">Real-time data pipeline monitoring and performance metrics</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item wide">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">🔮</div>
+                        <h3 class="gallery-title">Predictive Analytics</h3>
+                        <p class="gallery-description">Time series forecasting with confidence intervals and anomaly detection</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">🌐</div>
+                        <h3 class="gallery-title">Network Graph</h3>
+                        <p class="gallery-description">Social network analysis with community detection algorithms</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item tall">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">📈</div>
+                        <h3 class="gallery-title">Performance Metrics</h3>
+                        <p class="gallery-description">Model accuracy, precision, recall, and F1-score comparisons across multiple algorithms</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">🎯</div>
+                        <h3 class="gallery-title">Classification Results</h3>
+                        <p class="gallery-description">Confusion matrix and ROC curves for binary classification models</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item wide">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">⚡</div>
+                        <h3 class="gallery-title">Real-time Processing</h3>
+                        <p class="gallery-description">Stream processing visualization with throughput and latency metrics</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <div class="gallery-content">
+                        <div class="gallery-icon">🔍</div>
+                        <h3 class="gallery-title">Feature Importance</h3>
+                        <p class="gallery-description">SHAP values and feature contribution analysis for model interpretability</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Portfolio. Built with passion for AI and data science.</p>
+        </div>
+    </footer>
+</body>
+</html>

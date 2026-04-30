@@ -100,6 +100,22 @@
     });
   };
 
+  const setLogoText = () => {
+    document.querySelectorAll('a[data-framer-name="Logo"] p').forEach((node) => {
+      node.textContent = "Babar Naeem";
+    });
+  };
+
+  const reelSrcDoc =
+    "<!doctype html><style>html,body{margin:0;height:100%;overflow:hidden;background:#0b0b0b}body:before{content:'AI';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:700 18vw Inter,Arial,sans-serif;letter-spacing:.02em}body:after{content:'';position:absolute;inset:-30%;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.2),transparent 65%);animation:sweep 4s linear infinite}@keyframes sweep{from{transform:translateX(-45%)}to{transform:translateX(45%)}}</style>";
+
+  const replaceBrokenVideoEmbeds = () => {
+    document.querySelectorAll('iframe[src*="player.vimeo.com"]').forEach((frame) => {
+      frame.setAttribute("src", "about:blank");
+      frame.setAttribute("srcdoc", reelSrcDoc);
+    });
+  };
+
   const rewriteProjectDetailLinks = () => {
     const slugs = ["sonder-goods", "halo-wear", "lucent-lab", "arc-bloom", "atelier-nara"];
     document.querySelectorAll("a[href]").forEach((link) => {
@@ -177,6 +193,8 @@
     replaceHref("./work", workHref);
     replaceHref("./contact", contactHref);
     replaceHref("./#top", homeHref + "#top");
+    setLogoText();
+    replaceBrokenVideoEmbeds();
     rewriteProjectDetailLinks();
 
     document.querySelectorAll('a[href*="MandroDesign"]').forEach((link) => {
@@ -186,7 +204,7 @@
     });
 
     replaceText((text) => text.includes("curatedinterfaces"), "");
-    replaceText("Palmer", "Portfolio");
+    replaceText("Palmer", "Babar Naeem");
     replaceText((text) => text.includes("basedintokyo"), "Based in Pakistan");
     replaceText((text) => text.includes("artdirectorframerdeveloper"), "AI Engineer + Data Scientist");
     replaceText(
@@ -235,6 +253,10 @@
     replaceText((text) => text === "branding", "Data Science");
     replaceText((text) => text === "strategy", "LLM Design");
     replaceText((text) => text === "webdesign", "Automation");
+    replaceText((text) => text === "patterndimensions", "Code, Intelligence,");
+    replaceText((text) => text === "andmomentsthat", "Automation systems");
+    replaceText((text) => text === "connectandleavea", "that think,");
+    replaceText((text) => text === "bold", "learn, and ship.");
     replaceText(
       (text) => text.includes("patterndimensionsandmoments"),
       "Code, Intelligence,<br>and Automation"
@@ -242,6 +264,8 @@
     replaceText((text) => text === "babar", "Babar");
     replaceText((text) => text === "digitaldesigner", "AI Engineer");
     replaceText((text) => text === "visualfreelancer", "Data Scientist");
+    replaceText((text) => text === "visual", "Data");
+    replaceText((text) => text === "freelancer", "Scientist");
     replaceText((text) => text === "digitalnomad", "Full Stack Developer");
     replaceText((text) => text === "creativedeveloper", "Automation Architect");
     replaceText(
@@ -254,6 +278,10 @@
     replaceText((text) => text.includes("featuredworks"), "Selected Work");
     replaceText(
       (text) => text.includes("everyprojectisachancetoblenddesignanddevelopment"),
+      "From retrieval systems to forecasting pipelines, I turn complex model and data work into products people can actually use."
+    );
+    replaceText(
+      (text) => text.includes("sleekdigitalrealities"),
       "From retrieval systems to forecasting pipelines, I turn complex model and data work into products people can actually use."
     );
     replaceText((text) => text === "sondergoods", "Dastarkhaan");
@@ -292,11 +320,24 @@
 
     replaceText((text) => text === "visualthinker", "Systems Thinker");
     replaceText(
+      (text) => text.includes("blendingdesignandcodewithfunctionalclarity"),
+      "Building intelligent systems with useful data, clear models, and production-grade execution."
+    );
+    replaceText(
       (text) => text.includes("webridgecreativedirectionwithrealworldexecution"),
       "I bridge experimentation and delivery, combining modeling, data work, and product thinking into systems that are useful, fast, and built to hold up in production."
     );
+    replaceText(
+      (text) => text.includes("seamlessworkflow"),
+      "I bridge experimentation and delivery, combining modeling, data work, and product thinking into systems that are useful, fast, and built to hold up in production."
+    );
 
-    replaceText((text) => text.includes("experience"), "Experience");
+    replaceText((text) => text === "experience", "Experience");
+    replaceText((text) => text === "digitalcraft", "AI Delivery");
+    replaceText((text) => text === "global", "Remote");
+    replaceText((text) => text === "creativecollabs", "AI Collaborations");
+    replaceText((text) => text === "studio", "Product");
+    replaceText((text) => text === "creativepartnerships", "Technical Partnerships");
     replaceText((text) => text.includes("pickplans"), "Build Track");
     replaceText((text) => text === "clavmenstudio", "Independent Practice");
     replaceText((text) => text === "2022present", "2023 - present");
@@ -528,14 +569,61 @@
     if (routeKey === "work") applyWork();
     if (routeKey === "gallery") applyGallery();
     if (routeKey === "contact") applyContact();
+    document.documentElement.classList.add("bn-ready");
+  };
+
+  let scheduled = false;
+  let applying = false;
+
+  const scheduleRun = () => {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(() => {
+      scheduled = false;
+      applying = true;
+      run();
+      applying = false;
+    });
   };
 
   run();
-  window.addEventListener("load", run);
-  let attempts = 0;
-  const timer = window.setInterval(() => {
-    run();
-    attempts += 1;
-    if (attempts > 10) window.clearInterval(timer);
-  }, 500);
+  [
+    "DOMContentLoaded",
+    "load",
+    "pageshow",
+    "resize",
+    "orientationchange",
+    "visibilitychange",
+  ].forEach((eventName) => window.addEventListener(eventName, scheduleRun, { passive: true }));
+
+  const observer = new MutationObserver((mutations) => {
+    if (applying) return;
+    const needsRun = mutations.some((mutation) => {
+      const target = mutation.target;
+      if (!(target instanceof Element) && target.parentElement) {
+        return !target.parentElement.closest("script, style");
+      }
+      return target instanceof Element && !target.closest("script, style");
+    });
+    if (needsRun) scheduleRun();
+  });
+
+  const startObserver = () => {
+    if (!document.body) {
+      window.requestAnimationFrame(startObserver);
+      return;
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ["href", "target", "rel"],
+    });
+  };
+
+  startObserver();
+  [250, 500, 1000, 2000, 5000, 10000, 20000, 30000].forEach((delay) => {
+    window.setTimeout(scheduleRun, delay);
+  });
 })();
