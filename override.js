@@ -11,6 +11,60 @@
   const galleryHref = routeKey === "home" ? "./gallery/" : "../gallery/";
   const workHref = routeKey === "home" ? "./work/" : "../work/";
   const contactHref = routeKey === "home" ? "./contact/" : "../contact/";
+  const assetBase = routeKey === "home" ? "./assets/" : "../assets/";
+  const portfolioAssets = [
+    { file: "pos-solution-app.png", alt: "POS solution dashboard project" },
+    { file: "dastarkhaan-app.png", alt: "Dastarkhaan restaurant app project" },
+    { file: "study-app.png", alt: "StudyFocus dashboard project" },
+    { file: "intent-classifier.jpg", alt: "Intent classifier AI code project" },
+    { file: "voice-reception-automation.jpg", alt: "Voice reception automation project" },
+    { file: "studyfocus.jpg", alt: "StudyFocus productivity project" },
+    { file: "artistic-portfolio-website.jpg", alt: "Creative portfolio website project" },
+    { file: "ai-systems-poster.svg", alt: "AI systems portfolio visual" },
+  ];
+  const assetUrl = (file) => assetBase + file;
+  const reviewProfiles = [
+    {
+      name: "Farid Rahmonov",
+      role: "Founder, data startup",
+      city: "Tashkent",
+      quote: '"Babar turned our rough AI idea into a clear working product. The build was fast, practical, and easy for our team to use."',
+      image: assetUrl("client-avatar-1.jpg"),
+    },
+    {
+      name: "Elena Markovic",
+      role: "Product lead",
+      city: "Leeds",
+      quote: '"He understood the workflow quickly and delivered an automation system that removed hours of manual work every week."',
+      image: assetUrl("client-avatar-2.jpg"),
+    },
+    {
+      name: "Aigerim Sadykova",
+      role: "Research manager",
+      city: "Austin, USA",
+      quote: '"The RAG workflow Babar built gave us cleaner answers, better search, and a much more reliable internal knowledge base."',
+      image: assetUrl("client-avatar-3.jpg"),
+    },
+    {
+      name: "Idris Bennani",
+      role: "Operations director",
+      city: "Casablanca",
+      quote: '"Babar communicates clearly, ships quickly, and thinks through the product details instead of only writing code."',
+      image: assetUrl("client-avatar-4.jpg"),
+    },
+    {
+      name: "Samina Qureshi",
+      role: "Founder, consultancy",
+      city: "Islamabad",
+      quote: '"He handled the AI layer, data logic, and app experience with real care. The result felt polished and dependable."',
+      image: assetUrl("client-avatar-5.jpg"),
+    },
+  ];
+  const pricingPlans = [
+    { price: "$300", duration: "/ Project" },
+    { price: "$800", duration: "/ Project" },
+    { price: "$1,500", duration: "/ Project" },
+  ];
 
   const normalize = (value) =>
     String(value || "")
@@ -106,13 +160,111 @@
     });
   };
 
-  const reelSrcDoc =
-    "<!doctype html><style>html,body{margin:0;height:100%;overflow:hidden;background:#0b0b0b}body:before{content:'AI';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:700 18vw Inter,Arial,sans-serif;letter-spacing:.02em}body:after{content:'';position:absolute;inset:-30%;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.2),transparent 65%);animation:sweep 4s linear infinite}@keyframes sweep{from{transform:translateX(-45%)}to{transform:translateX(45%)}}</style>";
+  const reelSrcDoc = () => {
+    const slides = ["pos-solution-app.png", "dastarkhaan-app.png", "study-app.png"]
+      .map((file) => `<img src="${assetUrl(file)}" alt="Babar Naeem project preview">`)
+      .join("");
+    return `<!doctype html><style>html,body{margin:0;height:100%;overflow:hidden;background:#050505}body{display:grid;place-items:center;font-family:Inter,Arial,sans-serif}.reel{position:relative;width:100%;height:100%;overflow:hidden}.reel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:fade 9s infinite}.reel img:nth-child(2){animation-delay:3s}.reel img:nth-child(3){animation-delay:6s}.label{position:absolute;left:8%;bottom:8%;color:white;font:700 6vw Inter,Arial,sans-serif;letter-spacing:.02em;text-shadow:0 8px 28px #000}@keyframes fade{0%,8%{opacity:0;transform:scale(1.04)}15%,35%{opacity:1;transform:scale(1)}45%,100%{opacity:0;transform:scale(1.02)}}</style><div class="reel">${slides}<div class="label">AI BUILDS</div></div>`;
+  };
 
   const replaceBrokenVideoEmbeds = () => {
-    document.querySelectorAll('iframe[src*="player.vimeo.com"]').forEach((frame) => {
+    document.querySelectorAll('iframe[src*="player.vimeo.com"], iframe[src="about:blank"]').forEach((frame) => {
       frame.setAttribute("src", "about:blank");
-      frame.setAttribute("srcdoc", reelSrcDoc);
+      frame.setAttribute("srcdoc", reelSrcDoc());
+    });
+  };
+
+  const applyPortfolioMedia = () => {
+    let index = 0;
+    document.querySelectorAll("img").forEach((img) => {
+      const src = img.getAttribute("src") || "";
+      const srcset = img.getAttribute("srcset") || "";
+      const isExternalTemplateImage =
+        src.includes("framerusercontent.com/images") ||
+        srcset.includes("framerusercontent.com/images") ||
+        src.includes("randomuser.me");
+      const isLocalPortfolioImage = src.includes("/assets/") || src.startsWith("./assets/") || src.startsWith("../assets/");
+      if (!isExternalTemplateImage && isLocalPortfolioImage) return;
+
+      const profileImage = img.closest('[data-framer-name="User Image"]');
+      const asset = profileImage
+        ? { file: reviewProfiles[index % reviewProfiles.length].image.replace(assetBase, ""), alt: "Client review avatar" }
+        : portfolioAssets[index % portfolioAssets.length];
+      const url = asset.file.startsWith("./") || asset.file.startsWith("../") ? asset.file : assetUrl(asset.file);
+
+      img.setAttribute("src", url);
+      img.setAttribute("srcset", url);
+      img.setAttribute("alt", asset.alt);
+      img.removeAttribute("sizes");
+      img.style.objectPosition = "center center";
+      img.style.objectFit = profileImage ? "cover" : "contain";
+      img.style.backgroundColor = "#050505";
+      index += 1;
+    });
+  };
+
+  const applyReviewImages = () => {
+    const heading = plainNodes().find((node) => normalize(node.textContent).includes("workingprinciples"));
+    const section = heading?.closest("section");
+    if (!section) return;
+    const imgs = Array.from(section.querySelectorAll('[data-framer-name="User Image"] img'));
+    imgs.forEach((img, index) => {
+      const profile = reviewProfiles[index % reviewProfiles.length];
+      img.setAttribute("src", profile.image);
+      img.setAttribute("srcset", profile.image);
+      img.setAttribute("alt", profile.name);
+      img.removeAttribute("sizes");
+    });
+  };
+
+  const setNodeText = (root, selector, text) => {
+    const node = root.querySelector(selector);
+    if (node && node.textContent !== text) node.textContent = text;
+  };
+
+  const applyReviewCards = () => {
+    const heading = plainNodes().find((node) => normalize(node.textContent).includes("workingprinciples"));
+    const section = heading?.closest("section");
+    if (!section) return;
+
+    const cards = Array.from(section.querySelectorAll('[data-framer-name="Primary"]')).filter((card) =>
+      card.querySelector('[data-framer-name="Name"]')
+    );
+
+    cards.slice(0, reviewProfiles.length).forEach((card, index) => {
+      const profile = reviewProfiles[index];
+      setNodeText(card, '[data-framer-name="Body Text"]', profile.quote);
+      setNodeText(card, '[data-framer-name="Name"]', profile.name);
+      setNodeText(card, '[data-framer-name="Role"]', profile.role);
+      const cityNode = Array.from(card.querySelectorAll("p, h1, h2, h3, h4, h5, h6")).find((node) =>
+        ["tashkent", "leeds", "austinusa", "casablanca", "islamabad", "cairo", "london", "sanfrancisco"].includes(
+          normalize(node.textContent)
+        )
+      );
+      if (cityNode) cityNode.textContent = profile.city;
+      const img = card.querySelector('[data-framer-name="User Image"] img');
+      if (img) {
+        img.setAttribute("src", profile.image);
+        img.setAttribute("srcset", profile.image);
+        img.setAttribute("alt", profile.name);
+        img.removeAttribute("sizes");
+      }
+    });
+  };
+
+  const applyPricingCards = () => {
+    const heading = plainNodes().find((node) => normalize(node.textContent).includes("engagementmodels"));
+    const section = heading?.closest("section");
+    if (!section) return;
+
+    const cards = Array.from(section.querySelectorAll('[data-framer-name="Pricing"]')).filter((card) =>
+      card.querySelector('[data-framer-name="Price"]')
+    );
+
+    cards.slice(0, pricingPlans.length).forEach((card, index) => {
+      const plan = pricingPlans[index];
+      setNodeText(card, '[data-framer-name="Price"]', plan.price);
+      setNodeText(card, '[data-framer-name="Duration"]', plan.duration);
     });
   };
 
@@ -141,6 +293,19 @@
       if (normalize(node.textContent) === target) {
         const section = node.closest("section");
         if (section) section.classList.add("bn-hidden");
+      }
+    });
+  };
+
+  const hideWdxBadges = () => {
+    plainNodes().forEach((node) => {
+      const text = String(node.textContent || "");
+      if (!/\(WDX.?[^\)]*\)/i.test(text)) return;
+      const badge = node.closest(".framer-aqepui, [data-framer-name='Text 2'], div");
+      if (badge) {
+        badge.classList.add("bn-hidden");
+      } else {
+        node.classList.add("bn-hidden");
       }
     });
   };
@@ -185,6 +350,16 @@
       const node = document.querySelector(selector);
       if (node) node.setAttribute("content", meta.description);
     });
+    [
+      'meta[property="og:image"]',
+      'meta[name="twitter:image"]',
+    ].forEach((selector) => {
+      const node = document.querySelector(selector);
+      if (node) node.setAttribute("content", assetUrl("pos-solution-app.png"));
+    });
+    document.querySelectorAll('link[rel="icon"]').forEach((node) => {
+      node.setAttribute("href", assetUrl("ai-systems-poster.svg"));
+    });
   };
 
   const applyCommon = () => {
@@ -195,6 +370,7 @@
     replaceHref("./#top", homeHref + "#top");
     setLogoText();
     replaceBrokenVideoEmbeds();
+    applyPortfolioMedia();
     rewriteProjectDetailLinks();
 
     document.querySelectorAll('a[href*="MandroDesign"]').forEach((link) => {
@@ -217,6 +393,11 @@
     replaceText((text) => text === "overview", "Systems");
     replaceText((text) => text === "multidisciplinary", "Modeling");
     replaceText((text) => text === "focused", "Delivery");
+    replaceText((text) => text === "cairo", "Dastarkhaan");
+    replaceText((text) => text === "oslo", "StudyFocus");
+    replaceText((text) => text === "chain", "POS Solution");
+    replaceText((text) => text === "manila", "Intent Classifier");
+    replaceText((text) => text === "theo", "Voice Reception AI");
 
     replaceText((text) => text.includes("helpcenter"), "Questions");
     replaceText((text) => text === "clarifications", "Scope Notes");
@@ -246,6 +427,7 @@
     hideBySelector('a[href*="framer.link/"]');
     hideBySelector('#__framer-badge-container');
     hideSectionByHeading("Clients");
+    hideWdxBadges();
   };
 
   const applyHome = () => {
@@ -270,7 +452,7 @@
     replaceText((text) => text === "creativedeveloper", "Automation Architect");
     replaceText(
       (text) => text.includes("13years") || text.includes("relentlesscreativediscipline"),
-      "I'm Babar Naeem — an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build intelligent systems, automation workflows, and full-stack applications from idea to execution. I work with LLMs, RAG pipelines, intent classifiers, and real-world apps that think and scale."
+      "I'm Babar Naeem — an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build AI systems, automation workflows, and full-stack applications that are practical, fast, and built to scale."
     );
 
     replaceText((text) => text === "creativedevelopment", "Applied AI");
@@ -357,20 +539,25 @@
     replaceText((text) => text === "kyoto", "Applied");
 
     replaceText((text) => text.includes("testimonialreviews"), "Working Principles");
-    replaceText((text) => text === "lisakuroda", "Dmitri Volkov");
-    replaceText((text) => text === "founderstudioanalog", "Useful systems, not empty demos");
+    replaceText((text) => text === "lisakuroda", "Farid Rahmonov");
+    replaceText((text) => text === "dmitrivolkov", "Farid Rahmonov");
+    replaceText((text) => text === "founderstudioanalog", "Turned a fuzzy AI brief into a product we could launch.");
     replaceText((text) => text === "tashkent", "Tashkent");
-    replaceText((text) => text === "danielreyes", "Elena Kowalski");
-    replaceText((text) => text === "directorframehaus", "Clean workflows that actually save time");
+    replaceText((text) => text === "danielreyes", "Elena Markovic");
+    replaceText((text) => text === "elenakowalski", "Elena Markovic");
+    replaceText((text) => text === "directorframehaus", "Strong on backend logic, data flow, and polished delivery.");
     replaceText((text) => text === "leeds", "Leeds");
-    replaceText((text) => text === "meitanaka", "Amara Chen");
-    replaceText((text) => text === "uxdesignernuro", "Shipped a polished app from scratch, fast");
-    replaceText((text) => text === "sanfrancisco", "San Francisco");
-    replaceText((text) => text === "julianpierce", "Marcus Johnson");
-    replaceText((text) => text === "directorvektorinc", "Built a RAG pipeline that works in production");
-    replaceText((text) => text === "london", "London");
-    replaceText((text) => text === "hanasamoto", "Fatima Al-Rashid");
-    replaceText((text) => text === "ceowillowstudio", "Reliable output for real teams");
+    replaceText((text) => text === "meitanaka", "Aigerim Sadykova");
+    replaceText((text) => text === "amarachen", "Aigerim Sadykova");
+    replaceText((text) => text === "uxdesignernuro", "Built a retrieval workflow our team actually trusts every day.");
+    replaceText((text) => text === "sanfrancisco", "Austin, USA");
+    replaceText((text) => text === "julianpierce", "Idris Bennani");
+    replaceText((text) => text === "marcusjohnson", "Idris Bennani");
+    replaceText((text) => text === "directorvektorinc", "Fast execution, clean thinking, and a very usable final system.");
+    replaceText((text) => text === "london", "Casablanca");
+    replaceText((text) => text === "hanasamoto", "Samina Qureshi");
+    replaceText((text) => text === "fatimaalrashid", "Samina Qureshi");
+    replaceText((text) => text === "ceowillowstudio", "Handled both the AI layer and product details with real care.");
     replaceText((text) => text === "islamabad", "Islamabad");
     replaceText(
       (text) => text.includes("akihikoelevatedeverylayer"),
@@ -426,10 +613,10 @@
     replaceText((text) => text === "customquotes", "Flexible Scope");
     replaceText((text) => text === "designpackages", "Service Packages");
     replaceText((text) => text === "pricingtiers", "Delivery Models");
-    replaceText((text) => text === "99" || text === "$99", "Custom");
-    replaceText((text) => text === "299" || text === "$299", "Custom");
-    replaceText((text) => text === "899" || text === "$899", "Custom");
-    replaceText((text) => text === "month", "/Project");
+    replaceText((text) => text === "99" || text === "$99", "$300");
+    replaceText((text) => text === "299" || text === "$299", "$800");
+    replaceText((text) => text === "899" || text === "$899", "$1,500");
+    replaceText((text) => text === "month", "/ Project");
     replaceText((text) => text === "starterplan", "Starter Sprint");
     replaceText(
       (text) => text.includes("perfectforsmalllaunchesandpersonalsites"),
@@ -565,7 +752,10 @@
     applyMeta();
     applyCommon();
     hideElements();
+    applyReviewImages();
     if (routeKey === "home") applyHome();
+    if (routeKey === "home") applyReviewCards();
+    if (routeKey === "home") applyPricingCards();
     if (routeKey === "work") applyWork();
     if (routeKey === "gallery") applyGallery();
     if (routeKey === "contact") applyContact();

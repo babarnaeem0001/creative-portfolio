@@ -33,6 +33,17 @@ const metaByRoute = {
   },
 };
 
+const portfolioAssets = [
+  "pos-solution-app.png",
+  "dastarkhaan-app.png",
+  "study-app.png",
+  "intent-classifier.jpg",
+  "voice-reception-automation.jpg",
+  "studyfocus.jpg",
+  "artistic-portfolio-website.jpg",
+  "ai-systems-poster.svg",
+];
+
 const decodeHtml = (value) =>
   value
     .replace(/&nbsp;/gi, " ")
@@ -56,6 +67,11 @@ const exactRules = new Map(
     ["Overview", "Systems"],
     ["Multidisciplinary", "Modeling"],
     ["Focused", "Scalable"],
+    ["Cairo", "Dastarkhaan"],
+    ["Oslo", "StudyFocus"],
+    ["Chain", "POS Solution"],
+    ["Manila", "Intent Classifier"],
+    ["Theo", "Voice Reception AI"],
     ["Clarifications", "Scope Notes"],
     ["What services do you offer?", "What do you build?"],
     ["What is your typical turnaround time?", "How do you scope AI projects?"],
@@ -118,15 +134,40 @@ const exactRules = new Map(
     ["Junior Designer", "NLP + Intent Classification + Predictive Systems"],
     ["Kyoto", "Applied"],
     ["Lisa Kuroda", "Dmitri Volkov"],
-    ["Founder, Studio Analog", "Useful systems, not empty demos"],
+    ["Lisa Kuroda", "Farid Rahmonov"],
+    ["Dmitri Volkov", "Farid Rahmonov"],
+    ["Founder, Studio Analog", "Babar turned our rough AI idea into a clear working product. The build was fast, practical, and easy for our team to use."],
+    ["Useful systems, not empty demos", "Founder, data startup"],
+    ["Turned a fuzzy AI brief into a product we could launch.", "Babar turned our rough AI idea into a clear working product. The build was fast, practical, and easy for our team to use."],
     ["Daniel Reyes", "Elena Kowalski"],
-    ["Director, Framehaus", "Clean workflows that actually save time"],
+    ["Daniel Reyes", "Elena Markovic"],
+    ["Elena Kowalski", "Elena Markovic"],
+    ["Director, Framehaus", "He understood the workflow quickly and delivered an automation system that removed hours of manual work every week."],
+    ["Clean workflows that actually save time", "Product lead"],
+    ["Strong on backend logic, data flow, and polished delivery.", "He understood the workflow quickly and delivered an automation system that removed hours of manual work every week."],
     ["Mei Tanaka", "Amara Chen"],
-    ["UX Designer, Nuro", "Shipped a polished app from scratch, fast"],
-    ["Julian Pierce", "Marcus Johnson"],
-    ["Director, Vektor Inc.", "Built a RAG pipeline that works in production"],
-    ["Hana Samoto", "Fatima Al-Rashid"],
-    ["CEO, Willow Studio", "Reliable output for real teams"],
+    ["Mei Tanaka", "Aigerim Sadykova"],
+    ["Amara Chen", "Aigerim Sadykova"],
+    ["UX Designer, Nuro", "The RAG workflow Babar built gave us cleaner answers, better search, and a much more reliable internal knowledge base."],
+    ["Built a RAG pipeline that works in production", "Research manager"],
+    ["Built a retrieval workflow our team actually trusts every day.", "The RAG workflow Babar built gave us cleaner answers, better search, and a much more reliable internal knowledge base."],
+    ["San Francisco", "Austin, USA"],
+    ["Julian Pierce", "Idris Bennani"],
+    ["Marcus Johnson", "Idris Bennani"],
+    ["Director, Vektor Inc.", "Babar communicates clearly, ships quickly, and thinks through the product details instead of only writing code."],
+    ["Shipped a polished app from scratch, fast", "Operations director"],
+    ["Fast execution, clean thinking, and a very usable final system.", "Babar communicates clearly, ships quickly, and thinks through the product details instead of only writing code."],
+    ["London", "Casablanca"],
+    ["Hana Samoto", "Samina Qureshi"],
+    ["Fatima Al-Rashid", "Samina Qureshi"],
+    ["CEO, Willow Studio", "He handled the AI layer, data logic, and app experience with real care. The result felt polished and dependable."],
+    ["Reliable output for real teams", "Founder, consultancy"],
+    ["Handled both the AI layer and product details with real care.", "He handled the AI layer, data logic, and app experience with real care. The result felt polished and dependable."],
+    ["I design AI products to be useful first: measurable, understandable, and ready for real workflows.", "Babar turned our rough AI idea into a clear working product. The build was fast, practical, and easy for our team to use."],
+    ["Every system I build needs a strong backbone: clear data, thoughtful evaluation, and clean delivery.", "He understood the workflow quickly and delivered an automation system that removed hours of manual work every week."],
+    ["Good AI work is not hype. It is accuracy, latency, usability, and trust working together.", "The RAG workflow Babar built gave us cleaner answers, better search, and a much more reliable internal knowledge base."],
+    ["The best products turn messy operational problems into calm, repeatable decisions.", "Babar communicates clearly, ships quickly, and thinks through the product details instead of only writing code."],
+    ["I like shipping fast, but I care even more about making the thing dependable once it is live.", "He handled the AI layer, data logic, and app experience with real care. The result felt polished and dependable."],
     ["Islamabad", "Islamabad"],
     ["Awards", "Focus Areas"],
     ["Awwwards", "LLM"],
@@ -142,10 +183,10 @@ const exactRules = new Map(
     ["Custom Quotes", "Flexible Scope"],
     ["Design Packages", "Service Packages"],
     ["Pricing Tiers", "Delivery Models"],
-    ["$99", "Custom"],
-    ["$299", "Custom"],
-    ["$899", "Custom"],
-    ["/Month", "/Project"],
+    ["$99", "$300"],
+    ["$299", "$800"],
+    ["$899", "$1,500"],
+    ["/Month", "/ Project"],
     ["Starter Plan", "Starter Sprint"],
     ["One page Framer site", "Problem framing workshop"],
     ["Custom layout visuals", "Solution architecture"],
@@ -203,8 +244,8 @@ const containsRules = [
   ["whatsyourprocesslike", "What does collaboration look like?"],
   ["finalsection", "Closing Notes"],
   ["patterndimensionsandmoments", "Code, Intelligence,<br>and Automation"],
-  ["13years", "I'm Babar Naeem - an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build intelligent systems, automation workflows, and full-stack applications from idea to execution. I work with LLMs, RAG pipelines, intent classifiers, and real-world apps that think and scale."],
-  ["relentlesscreativediscipline", "I'm Babar Naeem - an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build intelligent systems, automation workflows, and full-stack applications from idea to execution. I work with LLMs, RAG pipelines, intent classifiers, and real-world apps that think and scale."],
+  ["13years", "I'm Babar Naeem - an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build AI systems, automation workflows, and full-stack applications that are practical, fast, and built to scale."],
+  ["relentlesscreativediscipline", "I'm Babar Naeem - an AI Engineer and Data Scientist based in Islamabad, Pakistan. I build AI systems, automation workflows, and full-stack applications that are practical, fast, and built to scale."],
   ["featuredprojects", "Featured Projects"],
   ["featuredworks", "Selected Work"],
   ["everyprojectisachancetoblenddesignanddevelopment", "From retrieval systems to forecasting pipelines, I turn complex model and data work into products people can actually use."],
@@ -250,6 +291,8 @@ const routeHref = (route, target) => {
   return `${prefix}${target}/`;
 };
 
+const assetHref = (route, file) => `${route === "home" ? "./" : "../"}assets/${file}`;
+
 const replaceHeadMeta = (html, route) => {
   const meta = metaByRoute[route];
   return html
@@ -261,9 +304,25 @@ const replaceHeadMeta = (html, route) => {
     .replace(/(<meta\s+name="twitter:description"\s+content=")[^"]*(")/, `$1${meta.description}$2`);
 };
 
+const replaceHeadImages = (html, route) =>
+  html
+    .replace(
+      /(<link\s+href=")[^"]*framerusercontent\.com\/images\/[^"]*("\s+rel="icon"[^>]*>)/g,
+      `$1${assetHref(route, "ai-systems-poster.svg")}$2`
+    )
+    .replace(
+      /(<meta\s+property="og:image"\s+content=")[^"]*(")/,
+      `$1${assetHref(route, "pos-solution-app.png")}$2`
+    )
+    .replace(
+      /(<meta\s+name="twitter:image"\s+content=")[^"]*(")/,
+      `$1${assetHref(route, "pos-solution-app.png")}$2`
+    );
+
 const replaceTextChunk = (text) => {
   const key = normalize(text);
   if (!key) return text;
+  if (/\(WDX.?[^\)]*\)/i.test(text)) return "";
   if (exactRules.has(key)) return exactRules.get(key);
   const contains = containsRules.find(([fragment]) => key.includes(fragment));
   return contains ? contains[1] : text;
@@ -309,14 +368,46 @@ const replaceLogoText = (html) =>
     "$1Babar Naeem$2"
   );
 
-const reelSrcDoc =
-  "&lt;!doctype html&gt;&lt;style&gt;html,body{margin:0;height:100%;overflow:hidden;background:#0b0b0b}body:before{content:'AI';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:700 18vw Inter,Arial,sans-serif;letter-spacing:.02em}body:after{content:'';position:absolute;inset:-30%;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.2),transparent 65%);animation:sweep 4s linear infinite}@keyframes sweep{from{transform:translateX(-45%)}to{transform:translateX(45%)}}&lt;/style&gt;";
+const reelSrcDoc = (route) => {
+  const slides = ["pos-solution-app.png", "dastarkhaan-app.png", "study-app.png"]
+    .map((file) => `&lt;img src=&quot;${assetHref(route, file)}&quot; alt=&quot;Babar Naeem project preview&quot;&gt;`)
+    .join("");
+  return `&lt;!doctype html&gt;&lt;style&gt;html,body{margin:0;height:100%;overflow:hidden;background:#050505}body{display:grid;place-items:center;font-family:Inter,Arial,sans-serif}.reel{position:relative;width:100%;height:100%;overflow:hidden}.reel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:fade 9s infinite}.reel img:nth-child(2){animation-delay:3s}.reel img:nth-child(3){animation-delay:6s}.label{position:absolute;left:8%;bottom:8%;color:white;font:700 6vw Inter,Arial,sans-serif;letter-spacing:.02em;text-shadow:0 8px 28px #000}@keyframes fade{0%,8%{opacity:0;transform:scale(1.04)}15%,35%{opacity:1;transform:scale(1)}45%,100%{opacity:0;transform:scale(1.02)}}&lt;/style&gt;&lt;div class=&quot;reel&quot;&gt;${slides}&lt;div class=&quot;label&quot;&gt;AI BUILDS&lt;/div&gt;&lt;/div&gt;`;
+};
 
-const replaceBrokenVideoEmbeds = (html) =>
-  html.replace(
-    /src="https:\/\/player\.vimeo\.com\/video\/315891633[^"]*"/g,
-    `src="about:blank" srcdoc="${reelSrcDoc}"`
-  );
+const replaceBrokenVideoEmbeds = (html, route) =>
+  html.replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, (tag) => {
+    if (!/player\.vimeo\.com|about:blank|AI BUILDS|content:'AI'/.test(tag)) return tag;
+    let next = tag.replace(/\s+src="[^"]*"/, ' src="about:blank"');
+    if (/\s+srcdoc="[^"]*"/.test(next)) {
+      next = next.replace(/\s+srcdoc="[^"]*"/, ` srcdoc="${reelSrcDoc(route)}"`);
+    } else {
+      next = next.replace(/<iframe\b/i, `<iframe srcdoc="${reelSrcDoc(route)}"`);
+    }
+    return next;
+  });
+
+const replaceImageAssets = (html, route) => {
+  let index = 0;
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    if (!/framerusercontent\.com\/images|randomuser\.me/.test(tag)) return tag;
+    const url = assetHref(route, portfolioAssets[index % portfolioAssets.length]);
+    index += 1;
+    let next = tag
+      .replace(/\s+srcset="[^"]*"/gi, "")
+      .replace(/\s+sizes="[^"]*"/gi, "")
+      .replace(/\s+src="[^"]*"/i, ` src="${url}"`)
+      .replace(/\s+alt(="[^"]*")?/i, ' alt="Babar Naeem project asset"');
+    if (!/\s+src="/i.test(next)) next = next.replace(/<img\b/i, `<img src="${url}"`);
+    if (!/\s+alt=/i.test(next)) next = next.replace(/<img\b/i, '<img alt="Babar Naeem project asset"');
+    return next;
+  });
+};
+
+const replaceOverrideCacheBusting = (html) =>
+  html
+    .replace(/href="(\.\/|\.\.\/)override\.css(?:\?[^"]*)?"/g, 'href="$1override.css?v=assets-20260430"')
+    .replace(/src="(\.\/|\.\.\/)override\.js(?:\?[^"]*)?"/g, 'src="$1override.js?v=assets-20260430"');
 
 const replaceRichParagraphs = (html) =>
   html
@@ -336,9 +427,15 @@ const replaceRichParagraphs = (html) =>
 for (const page of pages) {
   const absolute = path.join(root, page.file);
   const original = fs.readFileSync(absolute, "utf8");
-  const next = replaceRichParagraphs(
-    replaceBrokenVideoEmbeds(
-      replaceLogoText(replaceLinks(replaceTextNodes(replaceHeadMeta(original, page.route)), page.route))
+  const next = replaceOverrideCacheBusting(
+    replaceImageAssets(
+      replaceRichParagraphs(
+        replaceBrokenVideoEmbeds(
+          replaceLogoText(replaceLinks(replaceTextNodes(replaceHeadImages(replaceHeadMeta(original, page.route), page.route)), page.route)),
+          page.route
+        )
+      ),
+      page.route
     )
   );
   fs.writeFileSync(absolute, next, "utf8");

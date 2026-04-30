@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="120" fill="#080808"/>
+  <path d="M0 410 512 156v356H0Z" fill="#36d399" opacity=".18"/>
+  <path d="M124 332c42-78 224-78 264 0 16 31 1 68-34 68H158c-35 0-50-37-34-68Z" fill="#fff" opacity=".9"/>
+  <circle cx="256" cy="208" r="80" fill="#fff" opacity=".9"/>
+  <text x="256" y="470" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700" fill="#fff">EM</text>
+</svg>

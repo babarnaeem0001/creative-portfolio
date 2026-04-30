@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#050505"/>
+      <stop offset=".5" stop-color="#111827"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity=".14">
+    <path d="M120 220h960M120 360h960M120 500h960M120 640h960"/>
+    <path d="M260 110v680M460 110v680M660 110v680M860 110v680"/>
+  </g>
+  <g fill="#ffffff">
+    <text x="100" y="160" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="800">AI Systems</text>
+    <text x="100" y="246" font-family="Inter, Arial, sans-serif" font-size="34" opacity=".7">LLMs / RAG / automation / data products</text>
+    <text x="100" y="760" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">Babar Naeem</text>
+  </g>
+  <g fill="#00a3ff">
+    <circle cx="882" cy="274" r="22"/>
+    <circle cx="706" cy="456" r="16"/>
+    <circle cx="978" cy="574" r="28"/>
+  </g>
+  <g stroke="#36d399" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M706 456 882 274 978 574"/>
+  </g>
+</svg>

@@ -35,3 +35,33 @@ svg[class*="pencil"] {
   display: none !important;
   visibility: hidden !important;
 }
+
+/* Give the first white ribbon breathing room under the intro copy */
+.framer-l8q6i6-container {
+  margin-top: 56px !important;
+}
+
+/* Remove the company logo grid from the about section */
+.framer-g03chh,
+[data-framer-name="Top Logos"],
+[data-framer-name="Bottom Logos"] {
+  display: none !important;
+}
+
+/* Prevent the Focus Areas heading row from clipping */
+.framer-1j301b2-container,
+.framer-1j301b2-container .framer-16gon14,
+.framer-1j301b2-container .framer-1mi7f9s,
+.framer-1j301b2-container .framer-2av448 {
+  min-height: 24px !important;
+  overflow: visible !important;
+}
+
+/* Extra safety for stray editor UI */
+[id*="editorbar"],
+[class*="editorbar"],
+[aria-label*="Edit"],
+[title*="Edit"] {
+  display: none !important;
+  visibility: hidden !important;
+}

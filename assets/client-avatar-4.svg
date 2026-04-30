@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="120" fill="#101010"/>
+  <path d="M80 64h352v384H80z" fill="#ffffff" opacity=".06"/>
+  <path d="M128 334c40-78 218-78 256 0 16 32 1 66-34 66H162c-35 0-50-34-34-66Z" fill="#fff" opacity=".9"/>
+  <circle cx="256" cy="208" r="78" fill="#fff" opacity=".9"/>
+  <text x="256" y="470" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700" fill="#fff">IB</text>
+</svg>
